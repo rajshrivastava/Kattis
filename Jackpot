@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Feb 17 19:16:21 2020
+
+@author: rajkumarshrivastava
+"""
+
+import sys
+def gcd(a, b):
+    if b==0:
+        return a
+    return gcd(b, a%b)
+
+def lcm(a, b):
+    return (a//gcd(a,b))*b
+
+if __name__ == '__main__':
+    data = sys.stdin.read().split('\n')
+    n = int(data[0])
+    for i in range(1, 1+n*2, 2):
+        noOfWheels = int(data[i])
+        periodicityOfWheels = [int(x) for x in data[i+1].split()]
+        
+        lcm_value = 1
+        for j in range(noOfWheels):
+            lcm_value = lcm(lcm_value, periodicityOfWheels[j])
+            
+        if lcm_value>1000000000:
+            print('More than a billion.')
+        else:
+            print(lcm_value)
