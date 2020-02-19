@@ -1,0 +1,28 @@
+import sys
+if __name__ =='__main__':
+    def traverseLoop(i,j):
+        if i<0 or i>m-1 or j<0 or j>n-1 or mat[i][j] == '.':
+            return
+        
+        mat[i][j] = '.'
+        for d in directions:
+            traverseLoop(i+d[0], j+d[1])
+        
+    data = sys.stdin.read().split('\n')
+    mn = list(data[0].split())
+    m, n = int(mn[0]), int(mn[1])
+    mat = data[1:]
+    for i in range(m):
+        mat[i] = list(mat[i])
+    
+    count = 0
+    directions = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
+    for i in range(m):
+        for j in range(n):
+            if mat[i][j] == '#':
+                mat[i][j] = '.'
+                initial = (i,j)
+                for d in directions:
+                    traverseLoop(i+d[0], j+d[1])
+                count += 1
+    print(count)
