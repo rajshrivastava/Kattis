@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Feb  3 17:45:34 2020
+
+@author: rajkumarshrivastava
+"""    
+import sys
+def valid(i, j, r, c):
+    if i>=1 and i<=r and j>=1 and j<=c:
+        return True
+    else:
+        return False
+        
+if __name__ == '__main__':
+    data = sys.stdin.read()
+    data = data.split('\n')
+    r, c, n = data[0].split()
+    r, c, n = int(r), int(c), int(n)
+    
+    covering = []
+    for x in range(1, len(data)-1):
+        i,j = data[x].split()
+        i, j = int(i), int(j)
+        covering.append([i,j])
+        
+    total = r*c
+    arr = []
+    for i in range(r+1):
+        arr.append([0]*(c+1))
+    
+    count = 0
+    days = 0
+    while(count<total):
+        days += 1
+        to_cover = []
+        for i,j in covering:
+            if arr[i][j] == 0:
+                arr[i][j] = 1
+                count += 1
+                if valid(i, j+1, r, c):
+                    to_cover.append([i,j+1])
+                if valid(i, j-1, r, c):
+                    to_cover.append([i,j-1])
+                if valid(i+1, j, r, c):
+                    to_cover.append([i+1,j])
+                if valid(i-1, j, r, c):
+                    to_cover.append([i-1,j])
+        covering = to_cover[:]
+        
+    print(days)
